@@ -1,17 +1,16 @@
 version: '3.8'
+
 services:
-  db:
-    image: postgres:14
-    container_name: postgres
-    restart: always
+  postgres-db:
+    image: postgres:15.3
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: telegram_subscription
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
 
 volumes:
   postgres_data:

@@ -6,13 +6,13 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/app.js",
-    "dev": "ts-node src/app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@mtproto/core": "^6.3.0",
+    "@mtproto/core": "^3.1.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -30,6 +30,7 @@
     "@types/paypal-rest-sdk": "^1.7.9",
     "@types/pg": "^8.11.10",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2"
   }
 }

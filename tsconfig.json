@@ -1,22 +1,14 @@
 {
-    "compilerOptions": {
-        "target": "ES2020", // Versión de JavaScript a la que se compilará.
-        "module": "commonjs", // Módulos utilizados (Node.js usa CommonJS).
-        "strict": true, // Habilita todas las verificaciones estrictas.
-        "esModuleInterop": true, // Compatibilidad con imports de ES Modules.
-        "outDir": "./dist", // Carpeta de salida para archivos compilados.
-        "rootDir": "./src", // Carpeta raíz para archivos de origen.
-        "resolveJsonModule": true, // Permite importar JSON.
-        "typeRoots": [
-            "./node_modules/@types"
-        ], // Ubicación de tipos.
-        "skipLibCheck": true // Omite comprobaciones de tipos en dependencias.
-    },
-    "include": [
-        "src/**/*"
-    ], // Archivos a incluir en la compilación.
-    "exclude": [
-        "node_modules",
-        "dist"
-    ] // Archivos/carpetas a excluir.
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
