@@ -1,0 +1,102 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  name           String
+  email          String   @unique
+  password       String?
+  googleId       String?
+  appleId        String?
+  telegramUserId Int?     @unique
+  role           Role
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  channels       Channel[]        @relation("UserChannels")
+  subscriptions  Subscription[]   @relation("UserSubscriptions")
+  adminPayments  AdminPayment[]   @relation("AdminPayments")
+}
+
+model Channel {
+  id                Int      @id @default(autoincrement())
+  adminId           Int
+  telegramChannelId String   @unique
+  channelName       String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  admin             User       @relation("UserChannels", fields: [adminId], references: [id])
+  subscriptionPlans SubscriptionPlan[] @relation("ChannelPlans")
+  subscriptions     Subscription[]     @relation("ChannelSubscriptions")
+}
+
+model SubscriptionPlan {
+  id        Int      @id @default(autoincrement())
+  channelId Int
+  name      String
+  duration  Int
+  currency  String
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  channel        Channel   @relation("ChannelPlans", fields: [channelId], references: [id])
+  subscriptions  Subscription[] @relation("PlanSubscriptions")
+}
+
+model Subscription {
+  id                 Int      @id @default(autoincrement())
+  subscriberId       Int
+  channelId          Int
+  subscriptionPlanId Int
+  status             String
+  startDate          DateTime
+  endDate            DateTime
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  subscriber         User              @relation("UserSubscriptions", fields: [subscriberId], references: [id])
+  channel            Channel           @relation("ChannelSubscriptions", fields: [channelId], references: [id])
+  subscriptionPlan   SubscriptionPlan  @relation("PlanSubscriptions", fields: [subscriptionPlanId], references: [id])
+  payments           Payment[]         @relation("SubscriptionPayments")
+}
+
+model Payment {
+  id              Int      @id @default(autoincrement())
+  subscriptionId  Int
+  paymentProvider String
+  transactionId   String   @unique
+  amount          Float
+  currency        String
+  status          String
+  createdAt       DateTime @default(now())
+
+  subscription    Subscription @relation("SubscriptionPayments", fields: [subscriptionId], references: [id])
+}
+
+model AdminPayment {
+  id            Int      @id @default(autoincrement())
+  adminId       Int
+  totalAmount   Float
+  commission    Float
+  netAmount     Float
+  currency      String
+  paymentMethod String
+  transactionId String   @unique
+  status        String
+  createdAt     DateTime @default(now())
+
+  admin         User @relation("AdminPayments", fields: [adminId], references: [id])
+}
+
+enum Role {
+  admin
+  subscriber
+}

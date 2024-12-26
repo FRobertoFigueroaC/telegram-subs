@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@mtproto/core": "^3.1.0",
+    "@prisma/client": "^6.1.0",
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -29,6 +30,7 @@
     "@types/node-telegram-bot-api": "^0.64.7",
     "@types/paypal-rest-sdk": "^1.7.9",
     "@types/pg": "^8.11.10",
+    "prisma": "^6.1.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2"
