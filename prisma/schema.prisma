@@ -14,7 +14,7 @@ model User {
   password       String?
   googleId       String?
   appleId        String?
-  telegramUserId Int?     @unique
+  telegramUserId BigInt?     @unique
   role           Role
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -27,7 +27,7 @@ model User {
 model Channel {
   id                Int      @id @default(autoincrement())
   adminId           Int
-  telegramChannelId String   @unique
+  telegramChannelId BigInt?   @unique
   channelName       String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
