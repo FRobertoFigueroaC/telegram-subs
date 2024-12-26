@@ -30,4 +30,58 @@ export class TelegramService {
         }
     }
 
+    /**
+ * Agregar un usuario a un canal.
+ * @param channelId - ID o username del canal.
+ * @param userId - ID del usuario.
+ */
+    async addUserToChannel( channelId: string, userId: number ): Promise<void> {
+        try {
+            const url = `${ this.apiUrl }${ this.botToken }/inviteToChannel`;
+            await axios.post( url, {
+                channel: channelId,
+                users: [ userId ],
+            } );
+        } catch ( error ) {
+            console.error( 'Error al agregar usuario al canal:', error );
+            throw new Error( 'No se pudo agregar al usuario al canal.' );
+        }
+    }
+
+    /**
+     * Obtener información de un usuario.
+     * @param userId - ID del usuario.
+     * @returns Información del usuario.
+     */
+    async getUserInfo( userId: number ): Promise<any> {
+        try {
+            const url = `${ this.apiUrl }${ this.botToken }/getChat`;
+            const response = await axios.post( url, {
+                chat_id: userId,
+            } );
+            return response.data;
+        } catch ( error ) {
+            console.error( 'Error al obtener información del usuario:', error );
+            throw new Error( 'No se pudo obtener la información del usuario.' );
+        }
+    }
+
+    /**
+     * Eliminar a un usuario de un canal.
+     * @param channelId - ID o username del canal.
+     * @param userId - ID del usuario.
+     */
+    async removeUserFromChannel( channelId: string, userId: number ): Promise<void> {
+        try {
+            const url = `${ this.apiUrl }${ this.botToken }/kickChatMember`;
+            await axios.post( url, {
+                chat_id: channelId,
+                user_id: userId,
+            } );
+        } catch ( error ) {
+            console.error( 'Error al eliminar usuario del canal:', error );
+            throw new Error( 'No se pudo eliminar al usuario del canal.' );
+        }
+    }
+
 }
